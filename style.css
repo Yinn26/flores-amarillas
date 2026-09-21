@@ -1,0 +1,476 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+}
+
+.bienvenida {
+    text-align: center;
+}
+
+.bienvenida h1 {
+    font-size: 50px;
+    color: #c2185b;
+}
+
+.bienvenida p {
+    font-size: 20px;
+    color: #6d4c5b;
+}
+
+.bienvenida button,
+.continuar {
+    font-size: 18px;
+    padding: 12px 28px;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.bienvenida button:hover,
+.continuar:hover {
+    transform: scale(1.08);
+}
+
+.bienvenida button.si,
+.continuar {
+    background-color: #e91e63;
+    color: white;
+}
+
+.bienvenida button.no {
+    background-color: white;
+    color: #c2185b;
+    border: 2px solid #e91e63;
+}
+
+.segunda-pantalla {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #050817;
+}
+
+.universo-flores {
+    min-height: 100vh;
+    background: #050817;
+}
+
+.universo-fondo {
+    z-index: 0;
+}
+
+.halo-luz {
+    z-index: 1;
+}
+
+.particulas {
+    z-index: 2;
+}
+
+.ramo,
+.mensaje-final {
+    z-index: 3;
+}
+
+.halo-luz {
+    z-index: -2;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 213, 92, 0.2) 0%,
+            rgba(255, 192, 70, 0.08) 22%,
+            transparent 58%
+        );
+    filter: blur(18px);
+    animation: respirarHalo 7s ease-in-out infinite;
+}
+
+@keyframes respirarHalo {
+    0%,
+    100% {
+        opacity: 0.65;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+.particulas {
+    z-index: 0;
+}
+
+.particula {
+    position: absolute;
+    width: var(--tamano);
+    height: var(--tamano);
+    left: var(--x);
+    top: var(--y);
+    border-radius: 50%;
+    background: #ffe99a;
+    box-shadow:
+        0 0 6px #ffe99a,
+        0 0 18px rgba(255, 215, 100, 0.8);
+    opacity: 0;
+    animation:
+        aparecerParticula 2s ease-out var(--retraso) forwards,
+        flotarParticula var(--duracion) ease-in-out var(--retraso) infinite alternate;
+}
+
+@keyframes aparecerParticula {
+    to {
+        opacity: var(--opacidad);
+    }
+}
+
+@keyframes flotarParticula {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(var(--movimiento), -18px, 0);
+    }
+}
+
+/* Ramos */
+
+.ramo {
+    position: absolute;
+    z-index: 1;
+    width: clamp(150px, 20vw, 270px);
+    text-align: center;
+    opacity: 0;
+    transform-origin: bottom center;
+}
+
+.ramo-1 {
+    left: 5%;
+    top: 8%;
+    --escala: 0.7;
+    --retraso: 1.5s;
+    animation: aparecerRamo 2.5s ease-out var(--retraso) forwards,
+        balancearRamo 8s ease-in-out 4s infinite;
+}
+
+.ramo-2 {
+    right: 7%;
+    top: 18%;
+    --escala: 0.85;
+    --retraso: 3.5s;
+    animation: aparecerRamo 2.5s ease-out var(--retraso) forwards,
+        balancearRamo 9s ease-in-out 6s infinite;
+}
+
+.ramo-3 {
+    left: 25%;
+    bottom: -2%;
+    --escala: 1.15;
+    --retraso: 5.5s;
+    animation: aparecerRamo 2.5s ease-out var(--retraso) forwards,
+        balancearRamo 8s ease-in-out 8s infinite;
+}
+
+.ramo-4 {
+    right: 23%;
+    bottom: 3%;
+    --escala: 1;
+    --retraso: 7s;
+    animation: aparecerRamo 2.5s ease-out var(--retraso) forwards,
+        balancearRamo 10s ease-in-out 9s infinite;
+}
+
+@keyframes aparecerRamo {
+    from {
+        opacity: 0;
+        transform: translateY(45px) scale(calc(var(--escala) * 0.7));
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(var(--escala));
+        filter: blur(0);
+    }
+}
+
+@keyframes balancearRamo {
+    0%,
+    100% {
+        transform: scale(var(--escala)) rotate(-1deg);
+    }
+
+    50% {
+        transform: scale(var(--escala)) rotate(1.5deg);
+    }
+}
+
+/* Profundidad */
+
+.ramo-lejano {
+    filter: blur(1.5px);
+    opacity: 0.72;
+}
+
+.ramo-medio {
+    filter: blur(0.5px);
+    opacity: 0.88;
+}
+
+.ramo-cercano {
+    filter: drop-shadow(0 0 12px rgba(255, 211, 76, 0.18));
+}
+
+/* Flores SVG */
+
+.flor-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.tallo-svg {
+    fill: none;
+    stroke: #527d42;
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    animation: dibujarTallo 2.2s ease-out forwards;
+}
+
+.hoja-svg {
+    fill: #426e3a;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: aparecerHoja 1.5s ease-out 1s both;
+}
+
+.petalo-svg {
+    fill: #f6c945;
+    stroke: #ffdf72;
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: abrirPetalo 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.petalo-svg:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.petalo-svg:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+.petalo-svg:nth-child(4) {
+    animation-delay: 0.36s;
+}
+
+.petalo-svg:nth-child(5) {
+    animation-delay: 0.48s;
+}
+
+.centro-flor {
+    fill: #8b551f;
+    stroke: #e5a82e;
+    stroke-width: 3;
+    animation: aparecerCentro 1s ease-out 0.7s both;
+}
+
+@keyframes dibujarTallo {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes aparecerHoja {
+    from {
+        opacity: 0;
+        transform: scale(0) rotate(-25deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes abrirPetalo {
+    from {
+        opacity: 0;
+        transform: scale(0.1);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes aparecerCentro {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Mensajes */
+
+.mensaje-flor,
+.mensaje-final {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 14px rgba(255, 214, 105, 0.5);
+}
+
+.mensaje-flor {
+    margin-top: -18px;
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    opacity: 0;
+    animation: aparecerMensaje 2s ease-out calc(var(--retraso) + 1.2s) forwards;
+}
+
+.mensaje-final {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 8%;
+    width: min(90%, 620px);
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: clamp(1rem, 2.3vw, 1.5rem);
+    opacity: 0;
+    animation: aparecerMensaje 3s ease-out 9s forwards;
+}
+
+@keyframes aparecerMensaje {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .ramo-1 {
+        left: -12%;
+        top: 8%;
+    }
+
+    .ramo-2 {
+        right: -14%;
+        top: 16%;
+    }
+
+    .ramo-3 {
+        left: 5%;
+    }
+
+    .ramo-4 {
+        right: 2%;
+        bottom: 10%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .universo-flores *,
+    .universo-flores *::before,
+    .universo-flores *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.segunda-pantalla {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    overflow: hidden;
+    background: #030510;
+}
+
+.universo-interactivo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at center, #17233d 0%, #080d1d 48%, #02030a 100%);
+}
+
+.universo-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.indicador-universo {
+    position: absolute;
+    left: 50%;
+    bottom: 7%;
+    margin: 0;
+    color: rgba(255, 239, 177, 0.8);
+    font-family: Georgia, serif;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    letter-spacing: 0.08em;
+    text-align: center;
+    transform: translateX(-50%);
+    animation: desaparecerIndicador 5s ease 4s forwards;
+    pointer-events: none;
+}
+
+@keyframes desaparecerIndicador {
+    to {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .indicador-universo {
+        animation: none;
+    }
+}
+
+.universo-canvas {
+    touch-action: none;
+    cursor: grab;
+}
+
+.universo-canvas:active {
+    cursor: grabbing;
+}
